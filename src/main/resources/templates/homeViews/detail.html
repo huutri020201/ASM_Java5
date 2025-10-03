@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout :: view(~{::title}, ~{::section})}">
+<head>
+    <title th:text="${product.name}">Chi tiết sản phẩm</title>
+</head>
+<body>
+<section>
+    <div class="container py-4">
+        <div class="row">
+            <!-- Ảnh -->
+            <div class="col-md-5">
+                <img th:src="@{|/images/${product.image}|}" class="img-fluid rounded shadow">
+            </div>
+
+            <!-- Thông tin -->
+            <div class="col-md-7 text-light">
+                <h2 class="text-warning" th:text="${product.name}">Tên sản phẩm</h2>
+                <p class="card-text">Rank: <span th:text="${product.rank}"></span></p>
+                <h4 class="card-text">
+                    <span th:text="${#numbers.formatDecimal(product.price,0,'COMMA',0,'POINT')}"></span> VNĐ
+                </h4>
+
+                <div class="mt-4 d-flex gap-2">
+                    <a th:href="@{|/lol/buy/${product.id}|}" class="btn btn-primary">
+                        <i class="bi bi-cash-coin"></i> Mua ngay
+                    </a>
+                    <a th:href="@{|/lol/add/${product.id}|}" class="btn btn-primary">
+                        <i class="bi bi-cart-plus"></i> Giỏ hàng
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gợi ý sản phẩm khác -->
+        <div class="mt-5">
+            <h3 class="text-warning">Sản phẩm tương tự</h3>
+            <div class="row g-4">
+                <div class="col-md-3" th:each="p : ${related}">
+                    <div class="card h-100 bg-dark text-light">
+                        <a th:href="@{|/lol/${p.name}|}">
+                            <img th:src="@{|/images/${p.image}|}" class="card-img-top">
+                        </a>
+                        <div class="card-body">
+                            <h6 th:text="${p.name}">Tên</h6>
+                            <p>
+                                <span th:text="${#numbers.formatDecimal(p.price,0,'COMMA',0,'POINT')}"></span> VNĐ
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+</body>
+</html>

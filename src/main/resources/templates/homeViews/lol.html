@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout :: view(~{::title}, ~{::section})}">
+<head>
+    <title>Danh mục LOL</title>
+</head>
+<body>
+<section>
+    <div class="container py-4">
+        <h2 class="mb-4 text-center text-warning">Danh mục sản phẩm LOL</h2>
+
+        <div class="row g-4">
+            <div class="col-md-3 col-sm-6" th:each="p : ${products}">
+                <div class="card h-100 bg-dark text-light">
+                    <a th:href="@{|/lol/${p.id}|}"><img th:src="@{|/images/${p.image}|}" class="card-img-top" alt="LOL Product"></a>
+                    <div class="card-body d-flex flex-column">
+                        <a style="text-decoration:none; color:inherit;" th:href="@{|/lol/${p.id}|}"><h5 class="card-title" th:text="${p.name}">Tên sản phẩm</h5></a>
+                        <p class="card-text">Rank: <span th:text="${p.rank}"></span></p>
+                        <p class="card-text">Giá:
+                            <strong th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></strong>
+                        </p>
+                        <div class="mt-auto d-flex gap-2">
+                            <!-- Mua ngay -->
+                            <a th:href="@{|/lol/buy/${p.id}|}" class="btn btn-primary flex-fill">
+                                <i class="bi bi-cash-coin"></i> Mua ngay
+                            </a>
+
+                            <!-- Thêm vào giỏ -->
+                            <a th:href="@{|/lol/add/${p.id}|}" class="btn btn-primary flex-fill">
+                                <i class="bi bi-cart-plus"></i> Giỏ hàng
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

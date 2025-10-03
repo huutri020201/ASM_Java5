@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout :: view(~{::title}, ~{::section})}">
+<head>
+    <title>Giỏ hàng</title>
+</head>
+<body>
+<section class="container py-4">
+    <h2 class="mb-4 text-center text-warning">Giỏ hàng của bạn</h2>
+
+    <table class="table table-dark table-striped">
+        <thead>
+        <tr>
+            <th>Sản phẩm</th>
+            <th>Rank</th>
+            <th>Giá</th>
+            <th>Thành tiền</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${cartItems}">
+            <td th:text="${item.product.name}"></td>
+            <td th:text="${item.product.rank}"></td>
+            <td th:text="${#numbers.formatDecimal(item.product.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
+            <td th:text="${#numbers.formatDecimal(item.product.price * item.quantity, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
+            <td>
+                <a th:href="@{|/cart/remove/${item.product.name}|}" class="btn btn-danger btn-sm">Xóa</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h4 class="text-end text-light">
+        Tổng: <span th:text="${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
+    </h4>
+</section>
+</body>
+</html>

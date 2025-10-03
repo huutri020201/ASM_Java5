@@ -1,0 +1,145 @@
+:root {
+    --menu-footer: #121212;  /* menu + footer */
+    --bg: #1E1E1E;          /* nền */
+    --primary: #F9A825;     /* nút chính */
+    --secondary: #F9A825;   /* nút phụ */
+    --card-bg: #2C2C2C;     /* card */
+    --text-smoke: #CCCCCC;  /* chữ */
+}
+
+body.theme-dark {
+    background-color: var(--bg);
+    color: var(--text-smoke);
+}
+
+/* Navbar link */
+.navbar .nav-link {
+    color: var(--text-smoke) !important;
+    font-weight: bold;
+    font-size: 20px;
+}
+.navbar .nav-link:hover {
+    color: var(--primary) !important;
+}
+.site-footer {
+    background-color: var(--menu-footer);
+    color: var(--text-smoke);
+}
+
+.footer-link {
+    color: var(--text-smoke);
+    text-decoration: none;
+}
+.footer-link:hover {
+    color: var(--primary);
+    text-decoration: underline;
+}
+.banner {
+    position: relative;
+    overflow: hidden;
+}
+
+.banner-img {
+    max-height: 400px;
+    object-fit: cover;
+}
+
+.banner-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--text-smoke);
+    text-shadow: 0 3px 8px rgba(0, 0, 0, 0.8);
+}
+/* Card */
+.card {
+    background-color: var(--card-bg);
+    border: none;
+    border-radius: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+
+.card-title {
+    color: var(--text-smoke);
+    font-weight: bold;
+}
+
+.card-text {
+    color: var(--text-smoke);
+}
+
+/* Button chính */
+.btn-primary {
+    background-color: var(--primary);
+    border: none;
+    color: black;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #FFD54F;
+    color: black;
+    box-shadow: 0 -4px 10px rgba(255, 213, 79, 0.6); /* đổ bóng lên trên */
+    transform: translateY(-5px); /* nút nhích lên nhẹ */
+    transition: all 0.2s ease-in-out;
+}
+
+/* Button phụ (nếu cần) */
+.btn-secondary {
+    background-color: var(--secondary);
+    color: #121212;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #d7a40d;
+    color: #000;
+}
+
+/* Section heading */
+.section-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--secondary);
+}
+
+
+/* Trang đăng nhập */
+.login-page {
+    min-height: 80vh;
+}
+
+.login-card {
+    background-color: var(--card-bg);
+    color: var(--text-smoke);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+/* Input */
+.login-card .form-control {
+    background-color: #1E1E1E;
+    border: 1px solid #333;
+    color: white;
+
+}
+.login-card .form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 5px var(--primary);
+}
+.login-card .form-control::placeholder {
+    color: var(--text-smoke);
+    opacity: 0.7;
+}
+
+

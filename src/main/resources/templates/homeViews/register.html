@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout :: view(~{::title}, ~{::body})}">
+<head>
+    <title>Đăng ký</title>
+</head>
+<body>
+<main class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card login-card p-4 shadow-lg">
+        <h2 class="text-center text-warning mb-4">Đăng ký</h2>
+
+        <form action="/register" method="post">
+            <!-- Username -->
+            <div class="mb-3">
+                <label for="username" class="form-label">Tên đăng nhập</label>
+                <input type="text" id="username" name="username"
+                       class="form-control" placeholder="Nhập tên đăng nhập" required>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email"
+                       class="form-control" placeholder="Nhập email" required>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+                <label for="password" class="form-label">Mật khẩu</label>
+                <input type="password" id="password" name="password"
+                       class="form-control" placeholder="Nhập mật khẩu" required>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mb-3">
+                <label for="confirm" class="form-label">Xác nhận mật khẩu</label>
+                <input type="password" id="confirm" name="confirm"
+                       class="form-control" placeholder="Nhập lại mật khẩu" required>
+            </div>
+
+            <!-- Submit -->
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Đăng ký</button>
+            </div>
+        </form>
+
+        <!-- Link sang đăng nhập -->
+        <p class="text-center mt-3">
+            Đã có tài khoản?
+            <a th:href="@{/login}" class="footer-link">Đăng nhập</a>
+        </p>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: var(--menu-footer);">
+  <div class="container">
+
+    <!-- Logo -->
+    <a class="navbar-brand d-flex align-items-center gap-2" th:href="@{/home}">
+      <img src="/images/logo.png" alt="Logo" width="180px" height="60px" class="rounded">
+    </a>
+
+    <!-- Nút thu gọn menu trên mobile -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Nội dung menu -->
+    <div class="collapse navbar-collapse" id="navbarContent">
+
+      <!-- Menu trái -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" th:href="@{/home}">Trang chủ</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/valorant}">Valorant</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/lol}">LOL</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/tft}">TFT</a></li>
+      </ul>
+
+      <!-- Menu phải -->
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" th:href="@{/login}"><i class="bi bi-box-arrow-in-right"></i> Login</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/register}"><i class="bi bi-person-plus"></i> Register</a></li>
+      </ul>
+
+    </div>
+  </div>
+</nav>
