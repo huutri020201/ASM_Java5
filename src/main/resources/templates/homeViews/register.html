@@ -8,34 +8,37 @@
 <main class="d-flex justify-content-center align-items-center min-vh-100">
     <div class="card login-card p-4 shadow-lg">
         <h2 class="text-center text-warning mb-4">Đăng ký</h2>
-
-        <form action="/register" method="post">
+        <i class="text-danger" th:text="${message}"></i>
+        <form th:object="${account}" action="/register/in" method="post">
             <!-- Username -->
             <div class="mb-3">
                 <label for="username" class="form-label">Tên đăng nhập</label>
-                <input type="text" id="username" name="username"
-                       class="form-control" placeholder="Nhập tên đăng nhập" required>
+                <input th:field="*{username}" type="text" id="username" name="username"
+                       class="form-control" placeholder="Nhập tên đăng nhập">
+                <i class="text-danger" th:errors="*{username}"></i>
             </div>
 
             <!-- Email -->
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" id="email" name="email"
-                       class="form-control" placeholder="Nhập email" required>
+                <input th:field="*{email}" type="text" id="email" name="email"
+                       class="form-control" placeholder="Nhập email">
+                <i class="text-danger" th:errors="*{email}"></i>
             </div>
 
             <!-- Password -->
             <div class="mb-3">
                 <label for="password" class="form-label">Mật khẩu</label>
-                <input type="password" id="password" name="password"
-                       class="form-control" placeholder="Nhập mật khẩu" required>
+                <input th:field="*{password}" type="password" id="password" name="password"
+                       class="form-control" placeholder="Nhập mật khẩu">
+                <i class="text-danger" th:errors="*{password}"></i>
             </div>
 
             <!-- Confirm Password -->
             <div class="mb-3">
                 <label for="confirm" class="form-label">Xác nhận mật khẩu</label>
                 <input type="password" id="confirm" name="confirm"
-                       class="form-control" placeholder="Nhập lại mật khẩu" required>
+                       class="form-control" placeholder="Nhập lại mật khẩu">
             </div>
 
             <!-- Submit -->

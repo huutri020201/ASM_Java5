@@ -17,10 +17,12 @@
 <div th:replace="~{/homeViews/banner}"></div>
 
 <main class="container flex-fill py-4" style="min-height: 700px">
-  <article th:replace="${content}">CONTENT</article>
+  <section th:replace="${content}">CONTENT</section>
 </main>
 
 <footer class="site-footer mt-auto" th:replace="~{/homeViews/footer}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

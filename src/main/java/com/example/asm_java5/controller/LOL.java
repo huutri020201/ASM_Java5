@@ -4,9 +4,7 @@ import com.example.asm_java5.entities.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,12 +61,65 @@ public class LOL {
 
         return "homeViews/detail";
     }
-    @GetMapping({"/add/{id}", "/buy/{id}"})
+    @GetMapping({"/buy/{id}", "/buy/{id}"})
     public String addToCart(@PathVariable("id") int id) {
         products.stream()
                 .filter(p -> p.getId() == id)
                 .findFirst()
                 .ifPresent(cartService::add);
         return "redirect:/cart";
+    }
+    @GetMapping("/add/{id}")
+    public String buy(@PathVariable("id") int id) {
+        products.stream()
+                .filter(p -> p.getId() == id)
+                .findFirst()
+                .ifPresent(cartService::add);
+        return "redirect:/lol";
+    }
+
+
+    @GetMapping("/admin")
+    public String dashboard(Model model) {
+        model.addAttribute("products", products);
+        model.addAttribute("product", new Product()); // form thêm
+        return "adminViews/product";
+    }
+
+    // Thêm sản phẩm
+    @PostMapping("/admin/add")
+    public String addProduct(@ModelAttribute("product") Product product) {
+        product.setId(products.size() + 1); // fake id
+        products.add(product);
+        return "redirect:/lol/admin";
+    }
+
+    // Sửa (nạp dữ liệu vào form)
+    @GetMapping("/admin/edit/{id}")
+    public String editProduct(@PathVariable int id, Model model) {
+        Product p = products.stream().filter(x -> x.getId() == id).findFirst().orElse(null);
+        model.addAttribute("products", products);
+        model.addAttribute("product", p);
+        return "adminViews/product";
+    }
+
+    // Cập nhật sản phẩm
+    @PostMapping("/admin/update")
+    public String updateProduct(@ModelAttribute("product") Product product) {
+        products.replaceAll(p -> p.getId() == product.getId() ? product : p);
+        return "redirect:/lol/admin";
+    }
+
+    // Xóa
+    @GetMapping("/admin/delete/{id}")
+    public String deleteProduct(@PathVariable int id) {
+        products.removeIf(p -> p.getId() == id);
+        return "redirect:/lol/admin";
+    }
+    @GetMapping("/admin/reset")
+    public String reset(Model model) {
+        model.addAttribute("products", products);       // vẫn giữ danh sách
+        model.addAttribute("product", new Product());   // form rỗng
+        return "adminViews/product";                  // load lại trang
     }
 }
