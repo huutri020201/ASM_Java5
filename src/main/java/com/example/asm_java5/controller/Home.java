@@ -28,6 +28,7 @@ public class Home {
         if (username.equals("admin") && password.equals("123")) {
             return "redirect:/home";
         }
+        model.addAttribute("message", "Sai thông tin đăng nhập!");
         return "redirect:/login";
     }
 }
