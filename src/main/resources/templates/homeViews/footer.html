@@ -21,9 +21,13 @@
       <h6 class="fw-bold">Lối tắt</h6>
       <ul class="list-unstyled">
         <li><a class="footer-link" th:href="@{/home}">Trang chủ</a></li>
-        <li><a class="footer-link" th:href="@{/valorant}">Valorant</a></li>
-        <li><a class="footer-link" th:href="@{/lol}">LOL</a></li>
-        <li><a class="footer-link" th:href="@{/tft}">TFT</a></li>
+
+        <!-- Danh mục tự động -->
+        <li th:each="cate : ${categories}">
+          <a class="footer-link"
+             th:href="@{/{id}(id=${cate.categoryId})}"
+             th:text="${cate.categoryName}"></a>
+        </li>
       </ul>
     </div>
 

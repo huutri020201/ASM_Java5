@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{/layout::view(~{::title},~{::section})}">
+<head>
+    <title th:text="${game.title}">Chi tiết sản phẩm</title>
+</head>
+<body>
+<section class="container py-4">
+    <div class="row">
+        <!-- Ảnh và thumbnail -->
+        <div class="col-md-6">
+            <img th:src="@{${game.thumbnail}}" class="img-fluid rounded" th:alt="${game.title}">
+        </div>
+
+        <!-- Thông tin sản phẩm -->
+        <div class="col-md-6 text-light">
+            <h2 class="text-warning" th:text="${game.title}"></h2>
+            <p th:text="${game.description}"></p>
+            <p>Rank: <span th:text="${game.rank}"></span></p>
+            <p>Giá: <span class="text-warning fw-bold"
+                          th:text="${#numbers.formatDecimal(game.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span></p>
+
+            <div class="d-flex gap-2 mt-3">
+                <form th:action="@{/cart/add}" method="post" class="flex-fill">
+                    <input type="hidden" name="gameAccId" th:value="${game.gameAccId}">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-cart-plus"></i> Thêm vào giỏ
+                    </button>
+                </form>
+
+                <form id="buyNowForm" th:action="@{/detail/buyNow}" method="post" class="flex-fill">
+                    <input type="hidden" name="gameAccId" th:value="${game.gameAccId}">
+                    <button type="button" class="btn btn-primary w-100" id="buyNowBtn">
+                        <i class="bi bi-bag-check"></i> Mua ngay
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <hr class="my-4">
+        <h3 class="text-warning mb-3">Sản phẩm tương tự</h3>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col" th:each="g : ${relatedGames}">
+                <div class="card h-100 bg-dark text-light text-center shadow">
+                    <img th:src="@{${g.thumbnail}}" class="card-img-top" th:alt="${g.title}"
+                         style="height: 150px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title text-warning" th:text="${g.title}"></h5>
+                        <p class="card-text text-smoke fw-bold"
+                           th:text="|Rank: ${g.rank}|"></p>
+                        <div class="d-flex justify-content-between gap-2">
+                            <a class="btn btn-primary flex-fill"
+                               th:href="@{/detail/{id}(id=${g.gameAccId})}">
+                                Xem chi tiết
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("buyNowBtn").addEventListener("click", function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Xác nhận mua tài khoản?',
+                text: "Sau khi xác nhận, hệ thống sẽ trừ tiền ngay.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Đồng ý mua',
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById("buyNowForm").submit();
+                }
+            });
+        });
+    </script>
+
+</section>
+</body>
+</html>

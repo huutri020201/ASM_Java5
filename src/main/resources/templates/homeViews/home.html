@@ -5,105 +5,48 @@
 </head>
 <body>
 <section class="container py-4">
+
     <!-- Hàng 1: Sản phẩm nổi bật -->
     <h2 class="text-center mb-4 text-warning">Sản phẩm nổi bật</h2>
     <hr>
+
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-        <!-- Card 1 -->
-        <div class="col">
-            <div class="card h-100 bg-dark text-light">
-                <img src="/images/acc.webp" class="card-img-top" alt="Valorant">
+        <!-- Lặp danh mục game -->
+        <div class="col" th:each="cate : ${categories}">
+            <div class="card h-100 bg-dark text-light text-center">
+                <a th:href="@{/{id}(id=${cate.categoryId})}">
+                    <img th:src="@{/images/banner-{name}.jpg(name=${cate.categoryName})}"  class="card-img-top"
+                         th:alt="${cate.categoryName}" style="height: 150px;">
+                </a>
                 <div class="card-body">
-                    <h5 class="card-title">Tài khoản Valorant</h5>
-                    <p class="card-text">Rank cao, skin đẹp, giá hợp lý.</p>
-                    <a href="#" class="btn btn-primary">Xem thêm</a>
-                </div>
-            </div>
-        </div>
-        <!-- Card 2 -->
-        <div class="col">
-            <div class="card h-100 bg-dark text-light">
-                <a th:href="@{/lol}"><img src="/images/acc.webp" class="card-img-top" alt="LOL"></a>
-                <div class="card-body">
-                    <a style="text-decoration:none; color:inherit;" th:href="@{/lol}"><h5 class="card-title">Tài khoản LOL</h5></a>
-                    <p class="card-text">Full tướng, trang phục hot.</p>
-                    <a th:href="@{/lol}" class="btn btn-primary">Xem thêm</a>
-                </div>
-            </div>
-        </div>
-        <!-- Card 3 -->
-        <div class="col">
-            <div class="card h-100 bg-dark text-light">
-                <img src="/images/acc.webp" class="card-img-top" alt="TFT">
-                <div class="card-body">
-                    <h5 class="card-title">Tài khoản TFT</h5>
-                    <p class="card-text">Nhiều linh thú VIP, pass mùa mới.</p>
-                    <a href="#" class="btn btn-primary">Xem thêm</a>
-                </div>
-            </div>
-        </div>
-        <!-- Card 4 -->
-        <div class="col">
-            <div class="card h-100 bg-dark text-light">
-                <img src="/images/acc.webp" class="card-img-top" alt="CSGO">
-                <div class="card-body">
-                    <h5 class="card-title">Tài khoản CS:GO</h5>
-                    <p class="card-text">Rank Prime, nhiều skin hiếm.</p>
-                    <a href="#" class="btn btn-primary">Xem thêm</a>
+                    <a style="text-decoration:none; color:inherit;" th:href="@{/{id}(id=${cate.categoryId})}">
+                        <h5 class="card-title" th:text="'Tài khoản ' + ${cate.categoryName}"></h5>
+                    </a>
+                    <p class="card-text" th:text="${cate.description}"></p>
+                    <a class="btn btn-primary" th:href="@{/{id}(id=${cate.categoryId})}">Xem thêm</a>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- Hàng 2: Mini Game Quay Acc -->
     <hr>
     <h2 class="text-center mt-5 mb-4 text-warning">Random Acc may mắn</h2>
     <hr>
+
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-        <!-- Mini Game 1 -->
-        <div class="col">
+        <div class="col" th:each="cate : ${categories}">
             <div class="card h-100 bg-dark text-light text-center">
-                <img src="/images/acc.webp" class="card-img-top" alt="Quay Valorant">
+                <img th:src="@{/images/banner-{name}.jpg(name=${cate.categoryName})}" class="card-img-top" th:alt="${cate.categoryName}" style="height: 150px;">
                 <div class="card-body">
-                    <h5 class="card-title">Quay Acc Valorant</h5>
-                    <p class="card-text">Thử vận may, trúng acc VIP.</p>
-                    <a href="#" class="btn btn-primary">Quay ngay</a>
-                </div>
-            </div>
-        </div>
-        <!-- Mini Game 2 -->
-        <div class="col">
-            <div class="card h-100 bg-dark text-light text-center">
-                <img src="/images/acc.webp" class="card-img-top" alt="Quay LOL">
-                <div class="card-body">
-                    <h5 class="card-title">Quay Acc LOL</h5>
-                    <p class="card-text">Nhận nick full tướng, skin hiếm.</p>
-                    <a href="#" class="btn btn-primary">Quay ngay</a>
-                </div>
-            </div>
-        </div>
-        <!-- Mini Game 3 -->
-        <div class="col">
-            <div class="card h-100 bg-dark text-light text-center">
-                <img src="/images/acc.webp" class="card-img-top" alt="Quay TFT">
-                <div class="card-body">
-                    <h5 class="card-title">Quay Acc TFT</h5>
-                    <p class="card-text">Trúng nhiều linh thú cực hiếm.</p>
-                    <a href="#" class="btn btn-primary">Quay ngay</a>
-                </div>
-            </div>
-        </div>
-        <!-- Mini Game 4 -->
-        <div class="col">
-            <div class="card h-100 bg-dark text-light text-center">
-                <img src="/images/acc.webp" class="card-img-top" alt="Quay CS:GO">
-                <div class="card-body">
-                    <h5 class="card-title">Quay Acc CS:GO</h5>
-                    <p class="card-text">Cơ hội nhận skin hiếm, rank cao.</p>
+                    <h5 class="card-title" th:text="'Quay Acc ' + ${cate.categoryName}"></h5>
+                    <p class="card-text" th:text="'Thử vận may với tài khoản ' + ${cate.categoryName} + ' đa dạng!'"></p>
                     <a href="#" class="btn btn-primary">Quay ngay</a>
                 </div>
             </div>
         </div>
     </div>
+
 </section>
 </body>
 </html>

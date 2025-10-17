@@ -1,39 +1,99 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{/layout :: view(~{::title}, ~{::section})}">
+<html lang="en" th:replace="~{/layout::view(~{::title},~{::section})}">
 <head>
     <title>Giỏ hàng</title>
 </head>
 <body>
 <section class="container py-4">
-    <h2 class="mb-4 text-center text-warning">Giỏ hàng của bạn</h2>
+    <div th:if="${param.success== 'cart_done'}" class="alert alert-success text-center">
+        🎉 Thanh toán thành công! Hóa đơn đã được gửi qua email.
+    </div>
+    <div th:if="${param.error == 'not_enough_balance'}" class="alert alert-danger text-center">
+        ⚠️ Số dư không đủ để thanh toán.
+    </div>
+    <div th:if="${param.error == 'empty'}" class="alert alert-warning text-center">
+        🛒 Giỏ hàng trống!
+    </div>
+    <h2 class="text-center mb-4 text-warning">Giỏ hàng của bạn</h2>
+    <hr>
 
-    <table class="table table-dark table-striped">
-        <thead>
-        <tr>
-            <th>Sản phẩm</th>
-            <th>Rank</th>
-            <th>Giá</th>
-            <th>Thành tiền</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="item : ${cartItems}">
-            <td th:text="${item.product.name}"></td>
-            <td th:text="${item.product.rank}"></td>
-            <td th:text="${#numbers.formatDecimal(item.product.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
-            <td th:text="${#numbers.formatDecimal(item.product.price * item.quantity, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
-            <td>
-                <a th:href="@{|/cart/remove/${item.product.name}|}" class="btn btn-danger btn-sm">Xóa</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <!-- Nếu giỏ hàng rỗng -->
+    <div th:if="${#lists.isEmpty(cartItems)}" class="text-center mt-5">
+        <h4 class="text-light">Giỏ hàng hiện đang trống!</h4>
+        <a th:href="@{/home}" class="btn btn-primary mt-3">Tiếp tục mua sắm</a>
+    </div>
 
-    <h4 class="text-end text-light">
-        Tổng: <span th:text="${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
-    </h4>
+    <!-- Nếu có sản phẩm -->
+    <div th:if="${!#lists.isEmpty(cartItems)}">
+        <table class="table table-dark table-hover align-middle text-center">
+            <thead class="table-warning">
+            <tr>
+                <th>Hình ảnh</th>
+                <th>Tên tài khoản</th>
+                <th>Rank</th>
+                <th>Giá</th>
+                <th>Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${cartItems}">
+                <td style="width:120px;">
+                    <img th:src="@{${item.thumbnail}}" alt="img"
+                         class="img-fluid rounded" style="height:80px; object-fit:cover;">
+                </td>
+                <td th:text="${item.title}"></td>
+                <td th:text="${item.rank}"></td>
+                <td class="text-warning fw-bold"
+                    th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
+                <td>
+                    <form th:action="@{/cart/remove}" method="post">
+                        <input type="hidden" name="gameAccId" th:value="${item.gameAccId}">
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i> Xóa
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Tổng tiền + Nút hành động -->
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <h4 class="text-warning">
+                Tổng cộng:
+                <span th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span>
+            </h4>
+            <div>
+                <a th:href="@{/home}" class="btn btn-outline-light me-2">
+                    <i class="bi bi-arrow-left"></i> Tiếp tục mua
+                </a>
+                <form class="pt-2" id="checkoutForm" th:action="@{/cart/buynow}" method="post">
+                    <button type="button" class="btn btn-primary" id="checkoutBtn">
+                        <i class="bi bi-credit-card"></i> Thanh toán
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById("checkoutBtn").addEventListener("click", function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Xác nhận thanh toán?',
+                text: "Toàn bộ sản phẩm trong giỏ sẽ được mua và trừ tiền ngay.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Đồng ý mua',
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById("checkoutForm").submit();
+                }
+            });
+        });
+    </script>
 </section>
 </body>
 </html>

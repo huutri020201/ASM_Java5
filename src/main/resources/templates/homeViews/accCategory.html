@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{/layout::view(~{::title},~{::section})}">
+<head>
+    <title>Danh mục sản phẩm</title>
+</head>
+<body>
+<section class="container py-4">
+
+    <!-- Tiêu đề -->
+    <h2 class="text-center mb-4 text-warning" th:text="'Danh mục: ' + ${category.categoryName}"></h2>
+    <hr>
+
+    <!-- Lưới sản phẩm -->
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col" th:each="game : ${accounts}">
+            <div class="card h-100 bg-dark text-light text-center shadow">
+                <img th:src="@{${game.thumbnail}}" class="card-img-top" th:alt="${game.title}"
+                     style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title text-warning" th:text="${game.title}"></h5>
+                    <p class="card-text text-smoke fw-bold" th:text="|Giá: ${#numbers.formatDecimal(game.price, 0, 'COMMA', 0, 'POINT')}| + ' VND'"></p>
+                    <p class="card-text text-smoke fw-bold"
+                       th:text="|Rank: ${game.rank}|"></p>
+                    <div class="d-flex justify-content-between gap-2">
+                        <a class="btn btn-primary flex-fill"
+                           th:href="@{/detail/{id}(id=${game.gameAccId})}">
+                            Xem chi tiết
+                        </a>
+
+                        <form th:action="@{/cart/add}" method="post">
+                            <input type="hidden" name="gameAccId" th:value="${game.gameAccId}">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="bi bi-cart-plus"></i> Thêm
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

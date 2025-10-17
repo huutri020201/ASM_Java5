@@ -141,5 +141,8 @@ body.theme-dark {
     color: var(--text-smoke);
     opacity: 0.7;
 }
+.text-smoke{
+    color: var(--text-smoke);
+}
 
 

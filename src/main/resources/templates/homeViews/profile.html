@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi" th:replace="~{/layout::view(~{::title}, ~{::section})}">
+<head>
+    <title>Thông tin cá nhân</title>
+</head>
+<body>
+<section>
+    <div th:if="${success}" class="alert alert-success text-center" th:text="${success}"></div>
+    <div th:if="${successp}" class="alert alert-success text-center" th:text="${successp}"></div>
+    <div class="container mt-4">
+        <h3 class="mb-4 text-center">Thông tin cá nhân</h3>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+
+                <form th:action="@{/profile}" method="post" th:object="${account}" class="card p-4 shadow">
+
+                    <div class="mb-3">
+                        <label class="form-label text-smoke">Tên đăng nhập</label>
+                        <input type="text" th:field="*{username}" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-smoke">Họ và tên</label>
+                        <input type="text" th:field="*{fullname}" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label text-smoke">Email</label>
+                        <input type="email" th:field="*{email}" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label text-smoke">Số điện thoại</label>
+                        <input type="text" th:field="*{phone}" class="form-control">
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary px-4">Cập nhật</button>
+                        <a th:href="@{/changepass}" class="btn btn-primary px-4">Đổi mật khẩu</a>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

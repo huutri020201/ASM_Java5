@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="view1(title, content)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:replace="${title}">Admin - GameStore</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/css/custom.css">
+</head>
+<body class="theme-dark d-flex flex-column min-vh-100">
+
+<header th:replace="~{/homeViews/menu}"></header>
+<div th:replace="~{/homeViews/banner}"></div>
+
+<!--      MAIN CONTENT       -->
+<main class="container-fluid flex-fill py-4" style="min-height: 700px;">
+    <div class="row">
+
+        <!-- ===== ASIDE MENU ===== -->
+        <aside class="col-md-3 col-lg-2 mb-3">
+            <div class="list-group shadow-sm">
+                <a href="/admin/accounts" class="list-group-item list-group-item-action"
+                   th:classappend="${active=='accounts'} ? 'active'">
+                    <i class="bi bi-people"></i> Tài khoản người dùng
+                </a>
+                <a href="/admin/games" class="list-group-item list-group-item-action"
+                   th:classappend="${active=='games'} ? 'active'">
+                    <i class="bi bi-joystick"></i> Danh mục game
+                </a>
+                <a href="/admin/game-accounts" class="list-group-item list-group-item-action"
+                   th:classappend="${active=='gameaccs'} ? 'active'">
+                    <i class="bi bi-person-badge"></i> Tài khoản game
+                </a>
+                <a href="/admin/orders" class="list-group-item list-group-item-action"
+                   th:classappend="${active=='orders'} ? 'active'">
+                    <i class="bi bi-cart-check"></i> Đơn hàng
+                </a>
+                <a href="/admin/payments" class="list-group-item list-group-item-action"
+                   th:classappend="${active=='payments'} ? 'active'">
+                    <i class="bi bi-wallet2"></i> Thanh toán & Giao dịch
+                </a>
+                <a href="/admin/reports" class="list-group-item list-group-item-action"
+                   th:classappend="${active=='reports'} ? 'active'">
+                    <i class="bi bi-bar-chart"></i> Báo cáo và Thống kê
+                </a>
+            </div>
+        </aside>
+
+        <!-- ===== MAIN CONTENT AREA ===== -->
+        <article class="col-md-9 col-lg-10">
+            <div th:replace="${content}">CONTENT</div>
+        </article>
+
+    </div>
+</main>
+
+<footer class="site-footer mt-auto" th:replace="~{/homeViews/footer}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
