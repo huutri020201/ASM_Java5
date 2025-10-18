@@ -14,16 +14,16 @@
         <!-- Lặp danh mục game -->
         <div class="col" th:each="cate : ${categories}">
             <div class="card h-100 bg-dark text-light text-center">
-                <a th:href="@{/{id}(id=${cate.categoryId})}">
+                <a th:href="@{/category/{id}(id=${cate.categoryId})}">
                     <img th:src="@{/images/banner-{name}.jpg(name=${cate.categoryName})}"  class="card-img-top"
                          th:alt="${cate.categoryName}" style="height: 150px;">
                 </a>
                 <div class="card-body">
-                    <a style="text-decoration:none; color:inherit;" th:href="@{/{id}(id=${cate.categoryId})}">
+                    <a style="text-decoration:none; color:inherit;" th:href="@{/category/{id}(id=${cate.categoryId})}">
                         <h5 class="card-title" th:text="'Tài khoản ' + ${cate.categoryName}"></h5>
                     </a>
                     <p class="card-text" th:text="${cate.description}"></p>
-                    <a class="btn btn-primary" th:href="@{/{id}(id=${cate.categoryId})}">Xem thêm</a>
+                    <a class="btn btn-primary" th:href="@{/category/{id}(id=${cate.categoryId})}">Xem thêm</a>
                 </div>
             </div>
         </div>

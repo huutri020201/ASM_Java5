@@ -5,7 +5,6 @@ import com.example.asm_java5.repository.*;
 import com.example.asm_java5.service.CookieService;
 import com.example.asm_java5.service.EmailService;
 import com.example.asm_java5.service.SessionService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -21,7 +20,6 @@ import java.util.List;
 
 @Controller
 public class HomeController {
-
     @Autowired
     GameCategoryRepository categoryRepo;
 
@@ -51,7 +49,10 @@ public class HomeController {
         }
         return "homeViews/login"; // trỏ tới file login.html
     }
-
+    @RequestMapping("/admin")
+    public String homeAdmin(){
+        return "adminViews/home";
+    }
     // ======== POST /login/in ========
     @PostMapping("/login/in")
     public String login(@RequestParam("username") String username,
@@ -144,7 +145,7 @@ public class HomeController {
     @Autowired
     GameAccountRepository gameAccountRepo;
 
-    @GetMapping("/{id}")
+    @GetMapping("/category/{id}")
     public String viewCategory(@PathVariable("id") String id, Model model) {
         GameCategory category = categoryRepo.findById(id).orElse(null);
         List<GameAccount> accounts = gameAccountRepo.findByCategoryCategoryIdAndSoldFalse(id);

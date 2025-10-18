@@ -1,11 +1,122 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{/layout-admin::view1(~{::title},~{::section})}">
+<html lang="vi" th:replace="~{/layout-admin::view1(~{::title},~{::section})}">
 <head>
-    <title>Quản lý sản phẩm</title>
+    <title>Quản lý tài khoản game</title>
 </head>
 <body>
-<section>
-    <h1 class="text-warning text-center">Danh mục tài khoản game</h1>
+<section class="container mt-4">
+    <h2 class="text-center text-warning mb-4">Danh mục tài khoản game</h2>
+
+    <!-- FORM THÊM / SỬA -->
+    <form th:action="@{/admin/games/save}" th:object="${gameAccount}" method="post" class="card p-3 mb-4">
+        <input type="hidden" th:field="*{gameAccId}">
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label class="text-smoke">Tiêu đề</label>
+                <input type="text" th:field="*{title}" class="form-control" required>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label class="text-smoke">Loại game</label>
+                <select th:field="*{category.categoryId}" class="form-select" required>
+                    <option value="" disabled>-- Chọn loại game --</option>
+                    <option th:each="c : ${categories}"
+                            th:value="${c.categoryId}"
+                            th:text="${c.categoryName}"
+                            th:selected="${c.categoryId == gameAccount.category.categoryId}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label class="text-smoke">Giá</label>
+                <input type="number" th:field="*{price}" step="0.01" min="0" class="form-control" required>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label class="text-smoke">Tên đăng nhập game</label>
+                <input type="text" th:field="*{usernameGame}" class="form-control">
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label class="text-smoke">Mật khẩu game</label>
+                <input type="text" th:field="*{passwordGame}" class="form-control">
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label class="text-smoke">Rank</label>
+                <input type="text" th:field="*{rank}" class="form-control">
+            </div>
+
+            <div class="col-md-12 mb-3">
+                <label class="text-smoke">Mô tả</label>
+                <textarea th:field="*{description}" rows="3" class="form-control"></textarea>
+            </div>
+
+            <div class="col-md-12 mb-3">
+                <label class="text-smoke">Ảnh minh họa (URL)</label>
+                <input type="text" th:field="*{thumbnail}" class="form-control">
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button class="btn btn-primary px-4">Lưu</button>
+            <a th:href="@{/admin/games}" class="btn btn-secondary px-4">Làm mới</a>
+        </div>
+    </form>
+
+    <!-- BẢNG DANH SÁCH -->
+    <table class="table table-bordered text-center align-middle">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Tiêu đề</th>
+            <th>Loại game</th>
+            <th>Giá</th>
+            <th>Rank</th>
+            <th>Ngày tạo</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="g : ${gamePage.content}">
+            <td th:text="${g.gameAccId}"></td>
+            <td th:text="${g.title}"></td>
+            <td th:text="${g.category.categoryName}"></td>
+            <td th:text="${#numbers.formatDecimal(g.price, 0, 'COMMA', 0, 'POINT')} + '₫'"></td>
+            <td th:text="${g.rank}"></td>
+            <td th:text="${#dates.format(g.createdAt, 'dd/MM/yyyy')}"></td>
+            <td>
+                <span th:text="${g.sold ? 'Đã bán' : 'Chưa bán'}"
+                      th:classappend="${g.sold ? 'text-danger' : 'text-success'}"></span>
+            </td>
+            <td>
+                <a th:href="@{'/admin/games/edit/' + ${g.gameAccId}}" class="btn btn-sm btn-warning">Sửa</a>
+                <a th:href="@{'/admin/games/delete/' + ${g.gameAccId}}" class="btn btn-sm btn-danger"
+                   onclick="return confirm('Bạn có chắc muốn xóa không?')">Xóa</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- PHÂN TRANG -->
+    <nav th:if="${totalPages > 1}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                <a class="page-link" th:href="@{/admin/games(page=${currentPage - 1})}">Trước</a>
+            </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                th:classappend="${i == currentPage} ? 'active'">
+                <a class="page-link" th:text="${i + 1}" th:href="@{/admin/games(page=${i})}"></a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled'">
+                <a class="page-link" th:href="@{/admin/games(page=${currentPage + 1})}">Sau</a>
+            </li>
+        </ul>
+    </nav>
+
 </section>
 </body>
 </html>

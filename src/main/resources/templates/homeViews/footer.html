@@ -25,7 +25,7 @@
         <!-- Danh mục tự động -->
         <li th:each="cate : ${categories}">
           <a class="footer-link"
-             th:href="@{/{id}(id=${cate.categoryId})}"
+             th:href="@{/category/{id}(id=${cate.categoryId})}"
              th:text="${cate.categoryName}"></a>
         </li>
       </ul>

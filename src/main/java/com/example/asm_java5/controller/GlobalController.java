@@ -10,7 +10,6 @@ import java.util.List;
 
 @ControllerAdvice
 public class GlobalController {
-
     @Autowired
     GameCategoryRepository categoryRepo;
 

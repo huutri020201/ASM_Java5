@@ -23,7 +23,7 @@
         <!-- Lặp qua danh mục game -->
         <li class="nav-item" th:each="cate : ${categories}">
           <a class="nav-link"
-             th:href="@{/{id}(id=${cate.categoryId})}"
+             th:href="@{/category/{id}(id=${cate.categoryId})}"
              th:text="${cate.categoryName}"></a>
         </li>
       </ul>
