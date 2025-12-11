@@ -23,7 +23,6 @@ public class AuthFilter implements Filter {
                 uri.startsWith(request.getContextPath() + "/buy") ||
                 uri.startsWith(request.getContextPath() + "/admin"))
                 && request.getSession().getAttribute("user") == null) {
-
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }

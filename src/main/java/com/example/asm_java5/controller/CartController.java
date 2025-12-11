@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -64,7 +65,7 @@ public class CartController {
     TransactionRepository transactionRepo;
     @Transactional
     @PostMapping("/buynow")
-    public String checkout(HttpSession session) {
+    public String checkout(HttpSession session, RedirectAttributes redirectAttrs) {
         Account user = (Account) session.getAttribute("user");
         if (user == null) {
             return "redirect:/login";
@@ -73,12 +74,14 @@ public class CartController {
         // Lấy sản phẩm từ giỏ
         Collection<GameAccount> items = cartService.getItems();
         if (items.isEmpty()) {
-            return "redirect:/cart/view?error=empty";
+            redirectAttrs.addFlashAttribute("error", "empty");
+            return "redirect:/cart/view";
         }
 
         double total = cartService.getTotal();
         if (user.getBalance() < total) {
-            return "redirect:/cart/view?error=not_enough_balance";
+            redirectAttrs.addFlashAttribute("error", "not_enough_balance");
+            return "redirect:/cart/view";
         }
 
         // Trừ tiền người dùng
@@ -156,7 +159,8 @@ public class CartController {
         // Cập nhật session balance
         session.setAttribute("user", user);
 
-        return "redirect:/cart/view?success=cart_done";
+        redirectAttrs.addFlashAttribute("success", "cart_done");
+        return "redirect:/cart/view";
     }
 
 }

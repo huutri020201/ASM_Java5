@@ -23,15 +23,23 @@ public class GameAccountController {
     @GetMapping
     public String listGameAccounts(Model model,
                                    @RequestParam(defaultValue = "0") int page) {
-        Page<GameAccount> pages = gameRepo.findAll(PageRequest.of(page, 5));
+        int size = 5;
+        Page<GameAccount> pages = gameRepo.findAll(PageRequest.of(page, size));
+
+        // fix nếu page > totalPages - 1
+        if(page >= pages.getTotalPages() && pages.getTotalPages() > 0){
+            page = pages.getTotalPages() - 1;
+            pages = gameRepo.findAll(PageRequest.of(page, size));
+        }
 
         model.addAttribute("gamePage", pages);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", pages.getTotalPages());
-        model.addAttribute("gameAccount", new GameAccount()); // cho form
+        model.addAttribute("gameAccount", new GameAccount());
 
         return "adminViews/games";
     }
+
 
     @PostMapping("/save")
     public String save(@ModelAttribute GameAccount gameAccount) {

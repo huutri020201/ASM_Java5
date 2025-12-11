@@ -17,4 +17,5 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     // Kiểm tra username đã tồn tại
     boolean existsByUsername(String username);
+    boolean existsByEmail(String email);
 }

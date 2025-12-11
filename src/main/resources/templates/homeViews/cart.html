@@ -5,13 +5,13 @@
 </head>
 <body>
 <section class="container py-4">
-    <div th:if="${param.success== 'cart_done'}" class="alert alert-success text-center">
+    <div th:if="${success== 'cart_done'}" class="alert alert-success text-center">
         🎉 Thanh toán thành công! Hóa đơn đã được gửi qua email.
     </div>
-    <div th:if="${param.error == 'not_enough_balance'}" class="alert alert-danger text-center">
+    <div th:if="${error == 'not_enough_balance'}" class="alert alert-danger text-center">
         ⚠️ Số dư không đủ để thanh toán.
     </div>
-    <div th:if="${param.error == 'empty'}" class="alert alert-warning text-center">
+    <div th:if="${error == 'empty'}" class="alert alert-warning text-center">
         🛒 Giỏ hàng trống!
     </div>
     <h2 class="text-center mb-4 text-warning">Giỏ hàng của bạn</h2>

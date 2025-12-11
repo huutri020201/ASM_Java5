@@ -23,7 +23,7 @@ public class HomeController {
     @Autowired
     GameCategoryRepository categoryRepo;
 
-    @GetMapping("/home")
+    @GetMapping({"/home","/"})
     public String home() {
         return "homeViews/home";
     }
@@ -190,7 +190,7 @@ public class HomeController {
 
     @Transactional
     @PostMapping("/detail/buyNow")
-    public String buyNow(@RequestParam("gameAccId") Integer gameAccId, HttpSession session) {
+    public String buyNow(@RequestParam("gameAccId") Integer gameAccId, HttpSession session,RedirectAttributes redirectAttributes) {
         Account user = (Account) session.getAttribute("user");
         if (user == null) {
             return "redirect:/login";
@@ -277,8 +277,8 @@ public class HomeController {
 
         // Cập nhật session balance (để web hiển thị tức thì)
         session.setAttribute("user", user);
-
-        return "redirect:/home?success=buy_done";
+        redirectAttributes.addFlashAttribute("success", "buy_done");
+        return "redirect:/home";
     }
 
     // Hiển thị form thông tin cá nhân

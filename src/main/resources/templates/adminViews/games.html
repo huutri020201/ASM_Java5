@@ -75,7 +75,7 @@
             <th>Loại game</th>
             <th>Giá</th>
             <th>Rank</th>
-            <th>Ngày tạo</th>
+            <th>Ngày chỉnh sửa</th>
             <th>Trạng thái</th>
             <th>Hành động</th>
         </tr>
@@ -84,7 +84,7 @@
         <tr th:each="g : ${gamePage.content}">
             <td th:text="${g.gameAccId}"></td>
             <td th:text="${g.title}"></td>
-            <td th:text="${g.category.categoryName}"></td>
+            <td th:text="${g.category != null ? g.category.categoryName : 'Chưa có danh mục'}"></td>
             <td th:text="${#numbers.formatDecimal(g.price, 0, 'COMMA', 0, 'POINT')} + '₫'"></td>
             <td th:text="${g.rank}"></td>
             <td th:text="${#dates.format(g.createdAt, 'dd/MM/yyyy')}"></td>
@@ -97,6 +97,9 @@
                 <a th:href="@{'/admin/games/delete/' + ${g.gameAccId}}" class="btn btn-sm btn-danger"
                    onclick="return confirm('Bạn có chắc muốn xóa không?')">Xóa</a>
             </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(gamePage.content)}">
+            <td colspan="8">Không có dữ liệu</td>
         </tr>
         </tbody>
     </table>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi" th:replace="~{/layout-admin::view1(~{::title},~{::section})}">
+<head>
+    <title>Quản lý danh mục game</title>
+</head>
+<body>
+<section class="container mt-4">
+    <h2 class="text-center text-warning mb-4">Danh mục game</h2>
+
+    <!-- FORM THÊM / SỬA -->
+    <form th:action="@{/admin/categories/save}" th:object="${gameCategory}" method="post" class="card p-3 mb-4">
+        <input type="hidden" th:field="*{categoryId}">
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="text-smoke">Mã danh mục</label>
+                <input type="text" th:field="*{categoryId}" class="form-control" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="text-smoke">Tên danh mục</label>
+                <input type="text" th:field="*{categoryName}" class="form-control" required>
+            </div>
+
+            <div class="col-md-12 mb-3">
+                <label class="text-smoke">Mô tả</label>
+                <textarea th:field="*{description}" rows="3" class="form-control"></textarea>
+            </div>
+
+            <div class="col-md-12 mb-3">
+                <label class="text-smoke">Trạng thái</label>
+                <select th:field="*{active}" class="form-select">
+                    <option th:value="true" th:selected="${gameCategory.active}">Hoạt động</option>
+                    <option th:value="false" th:selected="${!gameCategory.active}">Không hoạt động</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button class="btn btn-primary px-4">Lưu</button>
+            <a th:href="@{/admin/categories}" class="btn btn-secondary px-4">Làm mới</a>
+        </div>
+    </form>
+
+    <!-- BẢNG DANH SÁCH -->
+    <table class="table table-bordered text-center align-middle">
+        <thead class="table-dark">
+        <tr>
+            <th>Mã</th>
+            <th>Tên danh mục</th>
+            <th>Mô tả</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="c : ${categoryPage.content}">
+            <td th:text="${c.categoryId}"></td>
+            <td th:text="${c.categoryName}"></td>
+            <td th:text="${c.description}"></td>
+            <td>
+                <span th:text="${c.active ? 'Hoạt động' : 'Không hoạt động'}"
+                      th:classappend="${c.active ? 'text-success' : 'text-danger'}"></span>
+            </td>
+            <td>
+                <a th:href="@{'/admin/categories/edit/' + ${c.categoryId}}" class="btn btn-sm btn-warning">Sửa</a>
+                <a th:href="@{'/admin/categories/delete/' + ${c.categoryId}}" class="btn btn-sm btn-danger"
+                   onclick="return confirm('Bạn có chắc muốn xóa không?')">Xóa</a>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(categoryPage.content)}">
+            <td colspan="5">Không có dữ liệu</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- PHÂN TRANG -->
+    <nav th:if="${totalPages > 1}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                <a class="page-link" th:href="@{/admin/categories(page=${currentPage - 1})}">Trước</a>
+            </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                th:classappend="${i == currentPage} ? 'active'">
+                <a class="page-link" th:text="${i + 1}" th:href="@{/admin/categories(page=${i})}"></a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled'">
+                <a class="page-link" th:href="@{/admin/categories(page=${currentPage + 1})}">Sau</a>
+            </li>
+        </ul>
+    </nav>
+
+</section>
+</body>
+</html>
