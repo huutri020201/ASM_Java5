@@ -90,7 +90,7 @@
             <td th:text="${#dates.format(g.createdAt, 'dd/MM/yyyy')}"></td>
             <td>
                 <span th:text="${g.sold ? 'Đã bán' : 'Chưa bán'}"
-                      th:classappend="${g.sold ? 'text-danger' : 'text-success'}"></span>
+                      th:classappend="${g.sold ? 'text-danger fw-bold' : 'text-success'}"></span>
             </td>
             <td>
                 <a th:href="@{'/admin/games/edit/' + ${g.gameAccId}}" class="btn btn-sm btn-warning">Sửa</a>

@@ -60,7 +60,7 @@
             <td th:text="${c.description}"></td>
             <td>
                 <span th:text="${c.active ? 'Hoạt động' : 'Không hoạt động'}"
-                      th:classappend="${c.active ? 'text-success' : 'text-danger'}"></span>
+                      th:classappend="${c.active ? 'text-success' : 'text-danger fw-bold'}"></span>
             </td>
             <td>
                 <a th:href="@{'/admin/categories/edit/' + ${c.categoryId}}" class="btn btn-sm btn-warning">Sửa</a>
